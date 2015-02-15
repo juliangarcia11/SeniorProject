@@ -22,21 +22,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/mainButton"
-        android:id="@+id/button"
-        android:layout_marginTop="74dp"
-        android:onClick="onButtonClick"
-        android:layout_below="@+id/textView"
+        android:text="@string/button_settings"
+        android:id="@+id/button_settings"
+        android:onClick="onSettingsClick"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/backgroundColorButton"
-        android:id="@+id/button2"
-        android:onClick="onDarkToggle"
-        android:background="#FFA336FF"
+        android:text="@string/button_levels"
+        android:id="@+id/button_levels"
+        android:onClick="onLevelsClick"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -46,10 +43,10 @@
         android:layout_height="wrap_content"
         android:text="@string/quitButton"
         android:id="@+id/button3"
-        android:layout_alignTop="@+id/button2"
+        android:onClick="onQuitButtonClick"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onQuitButtonClick" />
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
 

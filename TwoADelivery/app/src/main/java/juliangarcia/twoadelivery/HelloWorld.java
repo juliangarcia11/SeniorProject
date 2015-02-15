@@ -1,5 +1,6 @@
 package juliangarcia.twoadelivery;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,41 +13,10 @@ import java.util.ArrayList;
 
 public class HelloWorld extends ActionBarActivity {
 
-    private ArrayList<String> buttonText = new ArrayList<String>();
-    private ArrayList<String> toggleText = new ArrayList<String>();
-    private ArrayList<Integer> toggleColor = new ArrayList<Integer>();
-    private int buttonInt = 0;
-    private int toggleInt = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello_world);
-
-        makeButtonTexts();
-        makeToggleTexts();
-        makeToggleColor();
-    }
-
-    private void makeButtonTexts() {
-        buttonText.add("Click me!");
-        buttonText.add("Clicked!");
-        buttonText.add("You clicked me again!");
-        buttonText.add("You're way too excited about this.");
-        buttonText.add("Okay. Take a break.");
-        buttonText.add("Or don't :p");
-        buttonText.add("Will you keep clicking if I start over?");
-    }
-
-    private void makeToggleTexts() {
-        toggleText.add("Light Purple");
-        toggleText.add("Dark Purple");
-
-    }
-
-    private void makeToggleColor() {
-        toggleColor.add(0xFF471D70);
-        toggleColor.add(0xFFA336FF);
     }
 
 
@@ -63,23 +33,24 @@ public class HelloWorld extends ActionBarActivity {
      * the text on the button changes to "Clicked".
      * @param v The view passed in (not super sure)
      */
-    public void onButtonClick(View v) {
-        //do something
-        Button button = (Button) v;
+    public void onSettingsClick(View v) {
+        Button settings = (Button) findViewById(R.id.button_settings);
 
-        ((Button) v).setText(buttonText.get(buttonInt));
-
-        buttonInt = (buttonInt + 1) % buttonText.size();
+        settings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View vi) {
+                startActivity(new Intent(HelloWorld.this, SettingsActivity.class));
+            }
+        });
     }
 
-    public void onDarkToggle(View v) {
-        Button tog = (Button) v;
+    public void onLevelsClick(View v) {
+        Button settings = (Button) findViewById(R.id.button_levels);
 
-        ((Button) v).setText(toggleText.get(toggleInt));
-
-        ((Button) v).setBackgroundColor(toggleColor.get(toggleInt));
-
-        toggleInt = (toggleInt + 1) % toggleText.size();
+        settings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View vi) {
+                startActivity(new Intent(HelloWorld.this, LevelsActivity.class));
+            }
+        });
     }
 
     public void onQuitButtonClick(View v) {
