@@ -32,33 +32,23 @@
         android:layout_alignParentRight="true"
         android:textSize="25sp"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/button_binary0"
-        android:layout_below="@+id/parcel"
-        android:layout_toRightOf="@+id/text_levelsNum"
-        android:layout_toLeftOf="@+id/text_levelsCountdown"
-        android:layout_toStartOf="@+id/text_levelsCountdown">
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_binary0"
+        android:id="@+id/button_binary0"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_binary0"
-            android:id="@+id/button_binary0"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_binary1"
-            android:id="@+id/button_binary1"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom" />
-    </LinearLayout>
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_binary1"
+        android:id="@+id/button_binary1"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_alignRight="@id/text_levelsCountdown"/>
 
 </RelativeLayout>
