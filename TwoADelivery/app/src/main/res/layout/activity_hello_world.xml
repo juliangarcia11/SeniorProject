@@ -31,7 +31,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_levels"
+        android:text="@string/title_activity_levels"
         android:id="@+id/button_levels"
         android:onClick="onLevelsClick"
         android:layout_alignParentBottom="true"

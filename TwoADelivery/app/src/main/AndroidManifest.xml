@@ -6,10 +6,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".HelloWorld"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +20,17 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".HelloWorld" >
+            android:parentActivityName=".HelloWorld"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="juliangarcia.twoadelivery.HelloWorld" />
+        </activity>
+        <activity
+            android:name=".LevelsMenuActivity"
+            android:label="@string/title_activity_levels_menu"
+            android:parentActivityName=".HelloWorld"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="juliangarcia.twoadelivery.HelloWorld" />
@@ -27,10 +38,11 @@
         <activity
             android:name=".LevelsActivity"
             android:label="@string/title_activity_levels"
-            android:parentActivityName=".HelloWorld" >
+            android:parentActivityName=".LevelsMenuActivity"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="juliangarcia.twoadelivery.HelloWorld" />
+                android:value="juliangarcia.twoadelivery.LevelsMenuActivity" />
         </activity>
     </application>
 
