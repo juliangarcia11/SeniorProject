@@ -24,6 +24,7 @@
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,24 +47,27 @@
                 android:value="juliangarcia.twoadelivery.HelloWorld" />
         </activity>
         <activity
-            android:name=".LevelsActivity"
-            android:label="@string/title_activity_levels"
-            android:parentActivityName=".LevelsMenuActivity"
-            android:screenOrientation="landscape" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="juliangarcia.twoadelivery.LevelsMenuActivity" />
-        </activity>
-        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="juliangarcia.twoadelivery.SettingsActivity" />
         </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".LevelTemplateActivity"
+            android:label="@string/title_activity_level_template"
+            android:parentActivityName=".LevelsMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="juliangarcia.twoadelivery.LevelsMenuActivity" />
+        </activity>
     </application>
 
 </manifest>

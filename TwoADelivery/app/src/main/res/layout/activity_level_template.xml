@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LevelTemplate"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="500sp"
+        android:layout_height="150sp"
+        android:id="@+id/parcel"
+        android:background="#ff6d4d2c"
+        android:layout_below="@+id/grid_level"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/text_AddressDec"
+            android:id="@+id/textView_AddressDec"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id = "@+id/grid_level"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+        <TextView android:text="@string/text_levelTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_levelTitle"
+            android:layout_alignParentLeft="true"
+            android:textSize="25sp"/>
+
+        <TextView
+            android:text="@string/text_levelsNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_levelNum"
+            android:textSize="25sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"/>
+    </GridLayout>
+
+    <TextView android:text="@string/text_levelsCountdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/text_levelsCountdown"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:textSize="25sp"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_levelsSubmit"
+        android:id="@+id/button_levelsSubmit"
+        android:textSize="15sp"
+        android:layout_below="@+id/editText_userInput"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="175sp"
+        android:layout_height="75sp"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText_userInput"
+        android:layout_below="@+id/parcel"
+        android:layout_centerHorizontal="true" />
+
+    <FrameLayout
+        android:id="@+id/your_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        </FrameLayout>
+</RelativeLayout>

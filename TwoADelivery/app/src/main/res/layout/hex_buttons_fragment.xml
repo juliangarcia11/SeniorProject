@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    >
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="0"
+        android:id="@+id/button_hex0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="0" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="1"
+        android:id="@+id/button_hex1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="1" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="2"
+        android:id="@+id/button_hex2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="2" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="3"
+        android:id="@+id/button_hex3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="3" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="4"
+        android:id="@+id/button_hex8"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="22" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="5"
+        android:id="@+id/button_hex9"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="23" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="6"
+        android:id="@+id/button_hexA"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="24" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="7"
+        android:id="@+id/button_hexB"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="25" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="8"
+        android:id="@+id/button_hex4"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="17"
+        android:layout_column="0" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="9"
+        android:id="@+id/button_hex5"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="17"
+        android:layout_column="1" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="A"
+        android:id="@+id/button_hex6"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="17"
+        android:layout_column="2" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="B"
+        android:id="@+id/button_hex7"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="17"
+        android:layout_column="3" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="C"
+        android:id="@+id/button_hexC"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="17"
+        android:layout_column="22" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="D"
+        android:id="@+id/button_hexD"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="17"
+        android:layout_column="23" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="E"
+        android:id="@+id/button_hexE"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="17"
+        android:layout_column="24" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:text="F"
+        android:id="@+id/button_hexF"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="17"
+        android:layout_column="25" />
+
+</GridLayout>

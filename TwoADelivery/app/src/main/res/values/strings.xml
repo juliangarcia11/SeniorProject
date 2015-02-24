@@ -2,25 +2,30 @@
 <resources>
 
     <string name="app_name">2ADelivery</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="welcomestring">Welcome to TwoADelivery!</string>
-    <string name="button_settings">Settings</string>
-    <string name="text_level">Level Tutorial</string>
-    <string name="quitButton">Quit</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_levels_menu">LevelsMenuActivity</string>
     <string name="title_activity_levels">Levels</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="button_settings">Settings</string>
+    <string name="quitButton">Quit</string>
     <string name="button_level1">1</string>
     <string name="button_level2">2</string>
     <string name="button_binary0">0</string>
     <string name="button_binary1">1</string>
-    <string name="animation_off">Animation Off</string>
-    <string name="animation_on">Animation On</string>
-    <string name="title_activity_levels_menu">LevelsMenuActivity</string>
-    <string name="text_levelsCountdown">Countdown</string>
+    <string name="button_levelsSubmit">Submit!</string>
+    <string name="text_levelTitle">Level:</string>
+    <string name="text_levelsCountdown">00.0</string>
     <string name="confirm_registry">Email not found. You want to create a new user with that email and password?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="loginToast">\"Let\'s Toast!\"</string>
+    <string name="loginToast">Logged In!</string>
+    <string name="button_login">Login</string>
+    <string name="text_AddressDec">Address</string>
+    <string name="text_levelsNum">(num)</string>
+    <string name="title_activity_level_template">LevelTemplateActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

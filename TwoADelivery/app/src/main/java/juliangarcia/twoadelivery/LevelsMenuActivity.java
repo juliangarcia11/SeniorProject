@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 
 public class LevelsMenuActivity extends Activity implements View.OnClickListener {
 
@@ -36,11 +38,24 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_level1:
-                startActivity(new Intent(LevelsMenuActivity.this, LevelsActivity.class));
+                Intent binaryIntent = new Intent((v.getContext()), LevelTemplateActivity.class);
+                startActivityForResult(binaryIntent,2);
                 break;
             case R.id.button_level2:
-                startActivity(new Intent(LevelsMenuActivity.this, LevelsActivity.class));
-                break;
+                Intent hexIntent = new Intent((v.getContext()), LevelTemplateActivity.class);
+                startActivityForResult(hexIntent,16);
         }
     }
+
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+//        if (requestCode == PICK_CONTACT_REQUEST) {
+//            if (resultCode == RESULT_OK) {
+//                // A contact was picked.  Here we will just display it
+//                // to the user.
+//                //startActivity(new Intent(Intent.ACTION_VIEW, data));
+//            }
+//        }
+    }
+
 }

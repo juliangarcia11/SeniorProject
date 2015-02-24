@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    >
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:text="@string/button_binary0"
+        android:id="@+id/button_binary0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="0" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:text="@string/button_binary1"
+        android:id="@+id/button_binary1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:textSize="30sp"
+        android:layout_row="16"
+        android:layout_column="26" />
+
+
+</GridLayout>
