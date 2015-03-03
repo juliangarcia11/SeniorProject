@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class LevelsMenuActivity extends Activity implements View.OnClickListener {
 
-    private Button level1;
-    private Button level2;
+    private Button zen, level1, level2;
+    public final static String EXTRA_MESSAGE = "juliangarcia.twoadelivery.MESSAGE";
 
 
     @Override
@@ -27,6 +27,9 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
     }
 
     public void createButtonListeners() {
+        zen = (Button) findViewById(R.id.button_levelzen);
+        zen.setOnClickListener(this);
+
         level1 = (Button) findViewById(R.id.button_level1);
         level1.setOnClickListener(this);
 
@@ -36,15 +39,25 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent(this, LevelTemplateActivity.class);
+        String message = "";
+
         switch (v.getId()) {
+            case R.id.button_levelzen:
+                message = zen.getText().toString();
+                intent.putExtra(EXTRA_MESSAGE, message);
+                break;
             case R.id.button_level1:
-                Intent binaryIntent = new Intent((v.getContext()), LevelTemplateActivity.class);
-                startActivityForResult(binaryIntent,2);
+                message = level1.getText().toString();
+                intent.putExtra(EXTRA_MESSAGE, message);
                 break;
             case R.id.button_level2:
-                Intent hexIntent = new Intent((v.getContext()), LevelTemplateActivity.class);
-                startActivityForResult(hexIntent,16);
+                message = level2.getText().toString();
+                intent.putExtra(EXTRA_MESSAGE, message);
+                break;
         }
+
+        startActivity(intent);
     }
 
     protected void onActivityResult(int requestCode, int resultCode,

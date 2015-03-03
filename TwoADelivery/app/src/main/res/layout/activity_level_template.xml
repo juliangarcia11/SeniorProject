@@ -40,7 +40,7 @@
             android:textSize="25sp"/>
 
         <TextView
-            android:text="@string/text_levelsNum"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text_levelNum"
@@ -49,7 +49,7 @@
             android:layout_alignParentRight="true"/>
     </GridLayout>
 
-    <TextView android:text="@string/text_levelsCountdown"
+    <TextView android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -58,16 +58,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:textSize="25sp"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_levelsSubmit"
-        android:id="@+id/button_levelsSubmit"
-        android:textSize="15sp"
-        android:layout_below="@+id/editText_userInput"
-        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="175sp"
@@ -78,9 +68,30 @@
         android:layout_below="@+id/parcel"
         android:layout_centerHorizontal="true" />
 
-    <FrameLayout
-        android:id="@+id/your_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        </FrameLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_userInput"
+        android:layout_toRightOf="@+id/button_levelsSubmit"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_levelsSubmit"
+            android:id="@+id/button_levelsSubmit"
+            android:textSize="15sp"
+            android:layout_below="@+id/editText_userInput"
+            android:layout_alignLeft="@+id/parcel"
+            android:layout_alignStart="@+id/parcel" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_clearInput"
+            android:id="@+id/button_clearInput" />
+    </LinearLayout>
+
 </RelativeLayout>
