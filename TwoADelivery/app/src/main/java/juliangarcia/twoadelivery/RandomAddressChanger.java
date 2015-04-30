@@ -20,13 +20,13 @@ public class RandomAddressChanger extends Random {
 
     public String loadAddress() {
         Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(10);
+        int randomInt = randomGenerator.nextInt(9);
         address = "" + randomInt;
         log("Generated : " + randomInt);
         return address;
     }
 
-    private static void log(String aMessage){
+    private static void log(String aMessage) {
 
         System.out.println(aMessage);
     }

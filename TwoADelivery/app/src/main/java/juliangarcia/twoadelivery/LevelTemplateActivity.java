@@ -2,21 +2,27 @@ package juliangarcia.twoadelivery;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.CountDownTimer;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,84 +32,168 @@ import static android.view.View.OnClickListener;
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")
 
-public class LevelTemplateActivity extends FragmentActivity implements LevelBinaryButtonsFragment.BinaryButtonsListener {
+public class LevelTemplateActivity extends FragmentActivity implements LevelBinaryButtonsFragment.BinaryButtonsListener, LevelHexButtonsFragment.HexButtonsListener {
+    //variables
+    private Globals g;
+    private String correctAnswer, leveltype, levelnum, base;
+    private int answeredCorrectly, total;
+    private Intent intent;
 
+    //UI variables
     private EditText editText_userInput;
-    private Button button_levelsSubmit,button_clearInput;
+    private Button button_levelsSubmit, button_clearInput, button_pause;
     private TextView textView_AddressDec, text_levelsCountdown, text_levelsNum;
-    private String correctAnswer, intentString;
-    private LevelBinaryButtonsFragment binaryButtons;
-    //private LevelHexButtonsFragment hexButtons;
+
+    //hard coded variables
+    private long timeRemaining = -1;
+    private boolean onPause = false;
+    private CounterClass timer = new CounterClass(30000, 100);
+
+    //Persistent data variables
+    public final static String EXTRA_MESSAGE = "juliangarcia.twoadelivery.MESSAGE";
+    public SharedPreferences savedCurrency;
+    public SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_template);
 
-        Intent intent = getIntent();
-        intentString = intent.getStringExtra(LevelsMenuActivity.EXTRA_MESSAGE);
-        text_levelsNum = (TextView) findViewById(R.id.text_levelNum);
-        text_levelsNum.setText(intentString);
+        g = (Globals) getApplication();
+        answeredCorrectly = 0;
+        total = 0;
 
+        if (savedInstanceState == null) {
+            intent = getIntent();
+            leveltype = intent.getStringExtra("leveltype");
+            base = intent.getStringExtra("base");
+            text_levelsNum = (TextView) findViewById(R.id.text_levelNum);
+
+            setUpFragments();
+            setUIComponents();
+            setAnswer();
+        }
+    }
+
+    public void onStop() {
+        super.onStop();
+        timer.cancel();
+    }
+
+    private void setUIComponents() {
         editText_userInput = (EditText) findViewById(R.id.editText_userInput);
-
         textView_AddressDec = (TextView) findViewById(R.id.textView_AddressDec);
         text_levelsCountdown = (TextView) findViewById(R.id.text_levelsCountdown);
-
-        if(!intentString.equals("zen")) {
-            //set the original text of the countdown clock
-            text_levelsCountdown.setText("00:03:00");
-            //create an instance of the class we created
-            final CounterClass timer = new CounterClass(180000, 1000);
-            timer.start();
-        }
-
+        //Buttons
         button_levelsSubmit = (Button) findViewById(R.id.button_levelsSubmit);
         button_levelsSubmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitAnswer(editText_userInput.getText().toString());
+                if (!onPause) {
+                    submitAnswer(editText_userInput.getText().toString());
+                }
             }
         });
-
         button_clearInput = (Button) findViewById(R.id.button_clearInput);
         button_clearInput.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText_userInput.setText("");
+                if (!onPause) {
+                    editText_userInput.setText("");
+                }
             }
         });
+        button_pause = (Button) findViewById(R.id.button_pause);
+        button_pause.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!onPause) {
+                    onPause = true;
+                    timeRemaining = timer.millis;
+                    timer.cancel();
+                    editText_userInput.setVisibility(View.INVISIBLE);
+                    textView_AddressDec.setVisibility(View.INVISIBLE);
+                    text_levelsCountdown.setText("PAUSED!");
+                } else {
+                    onPause = false;
+                    timer = new CounterClass(timeRemaining, 100);
+                    timer.start();
+                    timeRemaining = -1;
 
-        /**
-         * ADDING FRAGMENT
-         * TODO Implement changing button fragment
-         */
-        binaryButtons = new LevelBinaryButtonsFragment();
-        binaryButtons.setArguments(getIntent().getExtras());
+                    editText_userInput.setVisibility(View.VISIBLE);
+                    textView_AddressDec.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
 
-        FragmentManager fragManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragManager.beginTransaction();
+    private void setUpFragments() {
+        // get fragment manager
+        FragmentManager fm = getSupportFragmentManager();
+        // add
+        FragmentTransaction ft = fm.beginTransaction();
+        //set level title text
+        if (intent.getStringExtra("leveltype").equals("Zen") || intent.getStringExtra("leveltype").equals("Tutorial")) {
+            text_levelsNum.setText(leveltype);
+            switch (base) {
+                case ("Binary"):
+                    ft.add(R.id.user_input_buttons_container, new LevelBinaryButtonsFragment());
+                    break;
+                case ("Hex"):
+                    ft.add(R.id.user_input_buttons_container, new LevelHexButtonsFragment());
+                    break;
+            }
 
-        transaction.add(R.id.LevelTemplate, binaryButtons);
-        transaction.commit();
+            if (intent.getStringExtra("leveltype").equals("Tutorial")) {
+                final RelativeLayout ins_tut = (RelativeLayout) findViewById(R.id.ins_tut_level);
+                ins_tut.setVisibility(View.VISIBLE);
 
-        //hexButtons = new LevelHexButtonsFragment();
-
-        setAnswer();
+                ins_tut.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        ins_tut.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        } else {//if not zen or tutorial, it must be a regular level
+            levelnum = intent.getStringExtra("levelnum");
+            //in case I add more bases, I used a switch case here for easy implementation
+            switch (base) {
+                case ("Binary"):
+                    text_levelsNum.setText(Integer.toBinaryString(Integer.parseInt(levelnum)));
+                    ft.add(R.id.user_input_buttons_container, new LevelBinaryButtonsFragment());
+                    break;
+                case ("Hex"):
+                    text_levelsNum.setText(Integer.toHexString(Integer.parseInt(levelnum)));
+                    ft.add(R.id.user_input_buttons_container, new LevelHexButtonsFragment());
+                    break;
+            }
+            timer.start();
+        }
+        ft.commit();
     }
 
     private void submitAnswer(String submission) {
+        Toast toast;
         if(checkSubmission()) {
-            editText_userInput.setText("CORRECT!");
+            g.addHydrocoins(5);
+            answeredCorrectly++;
+            toast = Toast.makeText(getApplicationContext(), "CORRECT!", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
             setAnswer();
         }
         else {
-            editText_userInput.setText("..incorrect..");
+            toast = Toast.makeText(getApplicationContext(), "..incorrect..", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            editText_userInput.setText("");
         }
+        toast.show();
+        editText_userInput.setText("");
     }
 
     private boolean checkSubmission() {
-        return editText_userInput.getText().toString().equals(correctAnswer);
+        //allows the user to input 0s in front of the answer
+        int num = Integer.parseInt(editText_userInput.getText().toString());
+        return Integer.toString(num).equals(correctAnswer);
     }
 
     @Override
@@ -112,13 +202,25 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
     }
 
     private void setAnswer() {
+        total++;//increment the number of posed conversions
+
+        //Using a custom random number generator
         RandomAddressChanger rand = new RandomAddressChanger();
+        //set random address
         String correct = rand.loadAddress();
         textView_AddressDec.setText(correct);
-        correctAnswer = Integer.toBinaryString(Integer.parseInt(correct));
+        //convert address to proper base
+        switch (base) {
+            case ("Binary"):
+                correctAnswer = Integer.toBinaryString(Integer.parseInt(correct));
+                break;
+            case ("Hex"):
+                correctAnswer = Integer.toHexString(Integer.parseInt(correct));
+                break;
+        }
+
     }
 
-    //Part of the tutorial
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @SuppressLint("NewApi")
     /**
@@ -138,6 +240,8 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
             super(millisInFuture, countDownInterval);
         }
 
+        public long millis;
+
         //Part of the tutorial
         @TargetApi(Build.VERSION_CODES.GINGERBREAD)
         @SuppressLint("NewApi")
@@ -148,9 +252,8 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
          */
         @Override
         public void onTick(long millisUntilFinished) {
-            long millis = millisUntilFinished;
-            String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
-                    TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+            millis = millisUntilFinished;
+            String hms = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millis),
                     TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
 
             System.out.print(hms);
@@ -162,7 +265,113 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
          */
         @Override
         public void onFinish() {
-            text_levelsCountdown.setText("Completed.");
+            g.addTimesPlayed();
+            if (leveltype.equals("Zen") || leveltype.equals("Tutorial")) {
+                finish();
+            } else {
+                createCustomDialog(answeredCorrectly, total);
+            }
         }
+    }
+
+    private void createCustomDialog(int correct, int total) {
+        //TODO: Using the variables "correct" and "total", determine scoring system for players.
+
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(this);
+        // hide to default title for Dialog
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        // inflate the layout dialog_layout.xml and set it as contentView
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_level_finish, null, false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        // Retrieve views from the inflated dialog layout and update their values
+        TextView txtTitle = (TextView) dialog.findViewById(R.id.txt_dialog_title);
+        txtTitle.setText("Level " + text_levelsNum.getText() + " Complete!");
+
+        TextView txtMessage = (TextView) dialog.findViewById(R.id.txt_dialog_message);
+        txtMessage.setText(correct + " out of " + total + " correct.");
+
+        //Create the ImageView to hold toe User's score
+        ImageView imgStar1 = (ImageView) dialog.findViewById(R.id.img_dialog_star1);
+        ImageView imgStar2 = (ImageView) dialog.findViewById(R.id.img_dialog_star2);
+        ImageView imgStar3 = (ImageView) dialog.findViewById(R.id.img_dialog_star3);
+
+        int sr = starRating(correct, total);
+        saveData(sr);
+        switch (sr) {
+            case 3:
+                imgStar1.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
+                imgStar2.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
+                imgStar3.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
+                break;
+            case 2:
+                imgStar1.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
+                imgStar2.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
+                imgStar3.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
+                break;
+            case 1:
+                imgStar1.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
+                imgStar2.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
+                imgStar3.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
+                break;
+        }
+
+        Button btnStart = (Button) dialog.findViewById(R.id.button_to_menu);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        // Display the dialog
+        dialog.show();
+    }
+
+    private int starRating(int correct, int total) {
+        if (correct < 1) {
+            return 0;
+        }
+
+        double percentage = (double) correct / total;
+        //TODO: Implement difficulty here.
+        // Easy:            percentage + 0.15
+        // Intermediate:    percentage + 0.05
+        // Hard:            percentage
+        // Insane:          percentage - 0.1
+        percentage = percentage + 0.15;
+        if (percentage > 0.8) {
+            return 3;
+        } else if (percentage > 0.5) {
+            return 2;
+        } else if (percentage > 0.2) {
+            return 1;
+        } else {
+            g.minusDriver();
+            return 0;
+        }
+    }
+
+    private void saveData(int starRating) {
+        savedCurrency = getSharedPreferences("Data", 0);
+        editor = savedCurrency.edit();
+        editor.putString("played", "save successful");
+        //in case I add more bases, I used a switch case here for easy implementation
+        switch (base) {
+            case ("Binary"):
+                editor.putInt("Binary" + levelnum, starRating);
+                break;
+            case ("Hex"):
+                editor.putInt("Hex" + levelnum, starRating);
+                break;
+        }
+        boolean passed = editor.commit();
     }
 }

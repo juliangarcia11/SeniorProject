@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="juliangarcia.twoadelivery" >
+    package="juliangarcia.twoadelivery">
 
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -8,20 +8,23 @@
  To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
      option is required to comply with the Google+ Sign-In developer policies
     -->
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" /> <!-- To retrieve the account name (email) as part of sign-in: -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <!-- To retrieve the account name (email) as part of sign-in: -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+        android:name=".Globals"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".HelloWorld"
+            android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,26 +34,26 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".HelloWorld"
-            android:screenOrientation="landscape" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="juliangarcia.twoadelivery.HelloWorld" />
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".LevelsMenuActivity"
             android:label="@string/title_activity_levels_menu"
-            android:parentActivityName=".HelloWorld"
-            android:screenOrientation="landscape" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="juliangarcia.twoadelivery.HelloWorld" />
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="juliangarcia.twoadelivery.SettingsActivity" />
@@ -63,10 +66,28 @@
         <activity
             android:name=".LevelTemplateActivity"
             android:label="@string/title_activity_level_template"
-            android:parentActivityName=".LevelsMenuActivity" >
+            android:parentActivityName=".LevelsMenuActivity"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="juliangarcia.twoadelivery.LevelsMenuActivity" />
+        </activity>
+        <activity
+            android:name=".StatsActivity"
+            android:label="@string/title_activity_stats"
+            android:parentActivityName=".LevelsMenuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="juliangarcia.twoadelivery.LevelsMenuActivity" />
+        </activity>
+        <activity
+            android:name=".BinaryTutorialActivity"
+            android:label="@string/title_activity_binary_tutorial"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="juliangarcia.twoadelivery.SettingsActivity" />
         </activity>
     </application>
 

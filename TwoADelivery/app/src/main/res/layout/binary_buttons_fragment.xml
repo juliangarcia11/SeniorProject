@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/binary_buttons_fragment"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin"
-    android:layout_marginBottom="@dimen/activity_vertical_margin"
-    >
+    android:layout_marginBottom="@dimen/activity_vertical_margin">
 
     <Button
+        android:background="@drawable/button_shape"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/button_binary0"
         android:id="@+id/button_binary0"
+        android:textSize="50sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:textSize="30sp"
-        android:layout_row="16"
-        android:layout_column="0" />
+        android:layout_alignParentStart="false"
+        android:textAlignment="center" />
 
     <Button
+        android:background="@drawable/button_shape"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/button_binary1"
         android:id="@+id/button_binary1"
+        android:textSize="50sp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="false"
-        android:textSize="30sp"
-        android:layout_row="16"
-        android:layout_column="26" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center" />
 
 
-</GridLayout>
+</RelativeLayout>

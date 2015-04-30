@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -38,8 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.widget.Toast;
-import juliangarcia.twoadelivery.DBTools;
-import juliangarcia.twoadelivery.User;
 
 
 /**
@@ -347,28 +344,28 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         UserLoginTask(String email, String password, Context context) {
             mEmail = email;
             mPassword = password;
-            mContext= context;
+            mContext = context;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            DBTools dbTools=null;
-            try{
+            DBTools dbTools = null;
+            try {
                 dbTools = new DBTools(mContext);
                 myUser = dbTools.getUser(mEmail);
 
-                if (myUser.userId>0) {
+                if (myUser.userId > 0) {
                     // Account exists, check password.
                     if (myUser.password.equals(mPassword))
                         return true;
                     else
                         return false;
                 } else {
-                    myUser.password=mPassword;
+                    myUser.password = mPassword;
                     return true;
                 }
-            } finally{
-                if (dbTools!=null)
+            } finally {
+                if (dbTools != null)
                     dbTools.close();
             }
         }
@@ -376,30 +373,30 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            showProgress(true);
 
             if (success) {
-                if (myUser.userId>0){
+                if (myUser.userId > 0) {
                     finish();
-                    Intent myIntent = new Intent(LoginActivity.this,HelloWorld.class);
+                    Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                     LoginActivity.this.startActivity(myIntent);
                 } else {
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
+                            switch (which) {
                                 case DialogInterface.BUTTON_POSITIVE:
-                                    DBTools dbTools=null;
-                                    try{
+                                    DBTools dbTools = null;
+                                    try {
                                         finish();
                                         dbTools = new DBTools(mContext);
-                                        myUser=dbTools.insertUser(myUser);
-                                        Toast myToast = Toast.makeText(mContext,R.string.loginToast, Toast.LENGTH_SHORT);
+                                        myUser = dbTools.insertUser(myUser);
+                                        Toast myToast = Toast.makeText(mContext, "Welcome " + myUser.username, Toast.LENGTH_SHORT);
                                         myToast.show();
-                                        Intent myIntent = new Intent(LoginActivity.this,HelloWorld.class);
+                                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                                         LoginActivity.this.startActivity(myIntent);
-                                    } finally{
-                                        if (dbTools!=null)
+                                    } finally {
+                                        if (dbTools != null)
                                             dbTools.close();
                                     }
                                     break;
