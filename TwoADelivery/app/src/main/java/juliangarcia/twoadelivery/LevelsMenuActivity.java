@@ -38,7 +38,9 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levels_menu);
 
+
         g = (Globals) getApplication();
+        g.setData();
 
         Intent intent = getIntent();
         intentString = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -218,6 +220,12 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
         dialog.show();
     }
 
+    /**
+     * TODO: Move this method to the LevelTemplateActivity and call it on start
+     *
+     * @param levelName Used to title the dialog
+     * @param i         The intent to start (NEEDS TO BE CHANGED)
+     */
     private void createLevelStartDialog(String levelName, Intent i) {
         final Intent intent = i;
         // Create custom dialog object
@@ -236,7 +244,7 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
         TextView txtTitle = (TextView) dialog.findViewById(R.id.txt_dialog_title);
         txtTitle.setText("Level: " + levelName);
 
-        int stars = getStars(intentString, levelName);
+        int stars = g.getStars(intentString, levelName);
         TextView txtMessage = (TextView) dialog.findViewById(R.id.txt_dialog_message);
         txtMessage.setText(stars + " out of " + 3);
 
@@ -245,7 +253,7 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
         ImageView imgStar2 = (ImageView) dialog.findViewById(R.id.img_dialog_star2);
         ImageView imgStar3 = (ImageView) dialog.findViewById(R.id.img_dialog_star3);
 
-        switch (getStars(intentString, levelName)) {
+        switch (g.getStars(intentString, levelName)) {
             case 3:
                 imgStar1.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
                 imgStar2.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
@@ -290,20 +298,5 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
 
         // Display the dialog
         dialog.show();
-    }
-
-    public int getStars(String base, String levelName) {
-        int stars = -1;
-
-        if (levelName.equals("Zen") || levelName.equals("Tutorial")) {
-            return 0;
-        }
-
-        savedCurrency = getSharedPreferences("Data", 0);
-        String restoredText = savedCurrency.getString("played", null);
-        if (restoredText != null) {//if the user HAS opened the app before
-            stars = savedCurrency.getInt(base + levelName, -1);//200 is the default value.
-        }
-        return stars;
     }
 }

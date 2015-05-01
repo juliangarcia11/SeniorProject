@@ -67,10 +67,9 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
             intent = getIntent();
             leveltype = intent.getStringExtra("leveltype");
             base = intent.getStringExtra("base");
-            text_levelsNum = (TextView) findViewById(R.id.text_levelNum);
 
-            setUpFragments();
             setUIComponents();
+            setUpFragments();
             setAnswer();
         }
     }
@@ -84,6 +83,7 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
         editText_userInput = (EditText) findViewById(R.id.editText_userInput);
         textView_AddressDec = (TextView) findViewById(R.id.textView_AddressDec);
         text_levelsCountdown = (TextView) findViewById(R.id.text_levelsCountdown);
+        text_levelsNum = (TextView) findViewById(R.id.text_levelNum);
         //Buttons
         button_levelsSubmit = (Button) findViewById(R.id.button_levelsSubmit);
         button_levelsSubmit.setOnClickListener(new OnClickListener() {
@@ -291,7 +291,7 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
 
         // Retrieve views from the inflated dialog layout and update their values
         TextView txtTitle = (TextView) dialog.findViewById(R.id.txt_dialog_title);
-        txtTitle.setText("Level " + text_levelsNum.getText() + " Complete!");
+        txtTitle.setText("Level " + text_levelsNum.getText() + " Complete");
 
         TextView txtMessage = (TextView) dialog.findViewById(R.id.txt_dialog_message);
         txtMessage.setText(correct + " out of " + total + " correct.");
@@ -302,7 +302,6 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
         ImageView imgStar3 = (ImageView) dialog.findViewById(R.id.img_dialog_star3);
 
         int sr = starRating(correct, total);
-        saveData(sr);
         switch (sr) {
             case 3:
                 imgStar1.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_full));
@@ -319,7 +318,15 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
                 imgStar2.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
                 imgStar3.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
                 break;
+            case 0:
+                g.minusDriver();
+                imgStar1.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
+                imgStar2.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
+                imgStar3.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
+                break;
         }
+
+        g.saveStars(base, levelnum, sr);
 
         Button btnStart = (Button) dialog.findViewById(R.id.button_to_menu);
         btnStart.setOnClickListener(new View.OnClickListener() {
@@ -354,24 +361,7 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
         } else if (percentage > 0.2) {
             return 1;
         } else {
-            g.minusDriver();
             return 0;
         }
-    }
-
-    private void saveData(int starRating) {
-        savedCurrency = getSharedPreferences("Data", 0);
-        editor = savedCurrency.edit();
-        editor.putString("played", "save successful");
-        //in case I add more bases, I used a switch case here for easy implementation
-        switch (base) {
-            case ("Binary"):
-                editor.putInt("Binary" + levelnum, starRating);
-                break;
-            case ("Hex"):
-                editor.putInt("Hex" + levelnum, starRating);
-                break;
-        }
-        boolean passed = editor.commit();
     }
 }

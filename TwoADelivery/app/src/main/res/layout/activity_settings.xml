@@ -17,9 +17,9 @@
         android:layout_height="wrap_content"
         android:text="@string/button_login"
         android:id="@+id/button_login"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/button_binary_tut"
+        android:layout_alignEnd="@+id/button_binary_tut" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -44,5 +44,25 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/button_binary_tut"
         android:layout_alignStart="@+id/button_binary_tut" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dev Options"
+        android:id="@+id/text_dev_op"
+        android:textColor="#fffeb300"
+        android:textStyle="bold|italic"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New CheckBox"
+        android:id="@+id/checklist_dev_op"
+        android:layout_below="@+id/text_dev_op"
+        android:layout_alignRight="@+id/text_dev_op"
+        android:layout_alignEnd="@+id/text_dev_op" />
 
 </RelativeLayout>
