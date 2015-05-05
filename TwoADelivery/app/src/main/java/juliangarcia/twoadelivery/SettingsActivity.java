@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,11 +15,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class SettingsActivity extends Activity implements View.OnClickListener {
+    //variables
+    private Globals g;
     //UI variables
-    private Button login, binaryTut;
+    private Button login, binaryTut, give5lives, resetDrivers, resetCoins;
 
 
     @Override
@@ -26,6 +30,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         createButtonListeners();
+
+        g = (Globals) getApplication();
     }
 
     public void createButtonListeners() {
@@ -34,6 +40,15 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         binaryTut = (Button) findViewById(R.id.button_binary_tut);
         binaryTut.setOnClickListener(this);
+
+        give5lives = (Button) findViewById(R.id.button_dev_op1);
+        give5lives.setOnClickListener(this);
+
+        resetCoins = (Button) findViewById(R.id.button_dev_op2);
+        resetCoins.setOnClickListener(this);
+
+        resetDrivers = (Button) findViewById(R.id.button_dev_op3);
+        resetDrivers.setOnClickListener(this);
     }
 
     @Override
@@ -45,7 +60,35 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             case R.id.button_binary_tut:
                 createBinaryTutDialog();
                 break;
+            case R.id.button_dev_op1:
+                g.addDrivers(5);
+                g.saveData();
+                createDevToast("Drivers Updated");
+                break;
+            case R.id.button_dev_op2:
+                g.setHydrocoins(200);
+                g.saveData();
+                createDevToast("Coins Updated");
+                break;
+            case R.id.button_dev_op3:
+                g.setDrivers(5);
+                g.saveData();
+                createDevToast("Drivers Updated");
+                break;
         }
+    }
+
+    private void createDevToast(String msg) {
+        Toast toast;
+        toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println(msg);
+//        System.out.println("Coins: " + g.getHydrocoins());
+//        System.out.println("Drivers: " + g.getDrivers());
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
     private void createBinaryTutDialog() {

@@ -47,7 +47,8 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
     //hard coded variables
     private long timeRemaining = -1;
     private boolean onPause = false;
-    private CounterClass timer = new CounterClass(30000, 100);
+    // TODO: Change 1200 to 30000 (short time for testing purposes)
+    private CounterClass timer = new CounterClass(1200, 100);
 
     //Persistent data variables
     public final static String EXTRA_MESSAGE = "juliangarcia.twoadelivery.MESSAGE";
@@ -333,6 +334,8 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
             @Override
             public void onClick(View v) {
                 finish();
+                // Save all data
+                g.saveData();
                 // Dismiss the dialog
                 dialog.dismiss();
             }

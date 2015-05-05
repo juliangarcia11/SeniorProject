@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -61,6 +64,45 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
         }
     }
 
+    /**
+     * Called when the activity has become visible.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        g.setData();
+
+        hydrocoins.setText(Integer.toString(g.getHydrocoins()));
+        drivers.setText(Integer.toString(g.getDrivers()));
+    }
+
+    /**
+     * Called when another activity is taking focus.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        g.saveData();
+
+        hydrocoins.setText(Integer.toString(g.getHydrocoins()));
+        drivers.setText(Integer.toString(g.getDrivers()));
+    }
+
+    /**
+     * Called when the activity is no longer visible.
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        g.saveData();
+
+        hydrocoins.setText(Integer.toString(g.getHydrocoins()));
+        drivers.setText(Integer.toString(g.getDrivers()));
+    }
+
     public void createButtons() {
         zen = (Button) findViewById(R.id.button_level_zen);
         zen.setOnClickListener(this);
@@ -101,6 +143,7 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         final Intent intent;
         String levelName = "ERROR";
+
         if (v.getId() != R.id.button_level_stats) {
             intent = new Intent(this, LevelTemplateActivity.class);
             intent.putExtra("base", intentString);
@@ -133,12 +176,22 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
 
             //TODO: Implement driver < 1 check here
             // If drivers < 1, show correct dialog with "Back to Menu" button
-
-            createLevelStartDialog(levelName, intent);
+            if (g.getDrivers() > 1 || levelName.equals("Tutorial")) {
+                createLevelStartDialog(levelName, intent);
+            } else {
+                createZeroLivesToast();
+            }
         } else {
             intent = new Intent(this, StatsActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void createZeroLivesToast() {
+        Toast toast;
+        toast = Toast.makeText(getApplicationContext(), "Sorry, you're out of lives.", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     private void createBinaryTutDialog() {
