@@ -174,8 +174,6 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
                     break;
             }
 
-            //TODO: Implement driver < 1 check here
-            // If drivers < 1, show correct dialog with "Back to Menu" button
             if (g.getDrivers() > 1 || levelName.equals("Tutorial")) {
                 createLevelStartDialog(levelName, intent);
             } else {
