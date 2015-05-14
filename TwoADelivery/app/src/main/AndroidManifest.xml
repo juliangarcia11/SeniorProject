@@ -73,7 +73,7 @@
                 android:value="juliangarcia.twoadelivery.LevelsMenuActivity" />
         </activity>
         <activity
-            android:name=".StatsActivity"
+            android:name=".StoreActivity"
             android:label="@string/title_activity_stats"
             android:parentActivityName=".LevelsMenuActivity">
             <meta-data

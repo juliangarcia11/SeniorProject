@@ -61,7 +61,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 createBinaryTutDialog();
                 break;
             case R.id.button_dev_op1:
-                g.addDrivers(5);
+                g.setDrivers(0);
                 g.saveData();
                 createDevToast("Drivers Updated");
                 break;

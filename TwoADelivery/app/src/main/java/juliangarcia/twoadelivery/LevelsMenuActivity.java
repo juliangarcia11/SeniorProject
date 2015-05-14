@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
 
     //UI Variables
     private ArrayList<Button> buttonList = new ArrayList<Button>();
-    private Button tutorial, zen, stats;
+    private Button tutorial, zen, store;
     private TextView levelTitle, hydrocoins, drivers;
 
     //Persistent data variables
@@ -59,6 +58,8 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
 
         createButtons();
 
+        lockLevels();
+
         if (!g.getSeenBinaryTut()) {
             createBinaryTutDialog();
         }
@@ -71,7 +72,24 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
     protected void onResume() {
         super.onResume();
 
+        try {
+            // check if any view exists on current view
+            zen = ((Button) findViewById(R.id.button_level_zen));
+        } catch (Exception e) {
+            // Button was not found
+            // It means, your button doesn't exist on the "current" view
+            // It was freed from the memory, therefore stop of activity was performed
+            // In this case I restart my app
+            Intent i = new Intent();
+            i.setClass(getApplicationContext(), MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            // Show toast to the user
+            Toast.makeText(getApplicationContext(), "Data lost due to excess use of other apps", Toast.LENGTH_LONG).show();
+        }
+        g.refreshDrivers();
         g.setData();
+        lockLevels();
 
         hydrocoins.setText(Integer.toString(g.getHydrocoins()));
         drivers.setText(Integer.toString(g.getDrivers()));
@@ -108,9 +126,9 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
         zen.setOnClickListener(this);
         zen.setText(R.string.level_zen);
 
-        stats = (Button) findViewById(R.id.button_level_stats);
-        stats.setOnClickListener(this);
-        stats.setText(R.string.button_level_stats);
+        store = (Button) findViewById(R.id.button_level_store);
+        store.setOnClickListener(this);
+        store.setText(R.string.button_level_store);
 
         tutorial = (Button) findViewById(R.id.button_level_00000);
         tutorial.setOnClickListener(this);
@@ -144,7 +162,7 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
         final Intent intent;
         String levelName = "ERROR";
 
-        if (v.getId() != R.id.button_level_stats) {
+        if (v.getId() != R.id.button_level_store) {
             intent = new Intent(this, LevelTemplateActivity.class);
             intent.putExtra("base", intentString);
 
@@ -174,13 +192,13 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
                     break;
             }
 
-            if (g.getDrivers() > 1 || levelName.equals("Tutorial")) {
+            if (g.getDrivers() >= 1 || levelName.equals("Tutorial")) {
                 createLevelStartDialog(levelName, intent);
             } else {
                 createZeroLivesToast();
             }
         } else {
-            intent = new Intent(this, StatsActivity.class);
+            intent = new Intent(this, StoreActivity.class);
             startActivity(intent);
         }
     }
@@ -278,6 +296,7 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
      * @param i         The intent to start (NEEDS TO BE CHANGED)
      */
     private void createLevelStartDialog(String levelName, Intent i) {
+
         final Intent intent = i;
         // Create custom dialog object
         final Dialog dialog = new Dialog(this);
@@ -332,6 +351,7 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onPause();
                 startActivity(intent);
                 // Dismiss the dialog
                 dialog.dismiss();
@@ -349,5 +369,20 @@ public class LevelsMenuActivity extends Activity implements View.OnClickListener
 
         // Display the dialog
         dialog.show();
+    }
+
+    private void lockLevels() {
+        for (int i = 1; i < buttonList.size(); i++) {
+            int prevLevel = g.getStars(intentString, Integer.toString(i)); //String base, String levelName
+            if (prevLevel <= 1) {//user does not have enough stars for this level
+                buttonList.get(i).setText("LOCKED");
+                buttonList.get(i).setBackgroundResource(R.drawable.button_locked);
+                buttonList.get(i).setClickable(false);
+            } else {
+                buttonList.get(i).setText(Integer.toBinaryString(i + 1));
+                buttonList.get(i).setBackgroundResource(R.drawable.button_shape);
+                buttonList.get(i).setClickable(true);
+            }
+        }
     }
 }

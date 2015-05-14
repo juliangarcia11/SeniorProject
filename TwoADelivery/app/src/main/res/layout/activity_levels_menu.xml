@@ -238,8 +238,8 @@
             android:background="@drawable/button_shape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_level_stats"
-            android:id="@+id/button_level_stats"
+            android:text="@string/button_level_store"
+            android:id="@+id/button_level_store"
             android:padding="5sp" />
 
         <Button

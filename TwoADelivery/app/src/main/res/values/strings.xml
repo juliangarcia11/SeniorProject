@@ -49,7 +49,7 @@
     <string name="text_hydrocoin">HYDROCOIN</string>
     <string name="text_drivers">DRIVERS</string>
     <string name="title_activity_stats">StatsActivity</string>
-    <string name="button_level_stats">Statistics</string>
+    <string name="button_level_store">Supply Store</string>
     <string name="text_stats_title">Statistics</string>
     <string name="text_title_timesplayed">Games Played:</string>
     <string name="text_timesplayed">Games Played:</string>

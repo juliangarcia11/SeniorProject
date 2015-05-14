@@ -47,8 +47,8 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
     //hard coded variables
     private long timeRemaining = -1;
     private boolean onPause = false;
-    // TODO: Change 1200 to 30000 (short time for testing purposes)
-    private CounterClass timer = new CounterClass(1200, 100);
+    // Change 30000 to 1200 (shorter time for testing purposes)
+    private CounterClass timer = new CounterClass(30000, 100);
 
     //Persistent data variables
     public final static String EXTRA_MESSAGE = "juliangarcia.twoadelivery.MESSAGE";
@@ -320,12 +320,16 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
                 imgStar3.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
                 break;
             case 0:
-                g.minusDriver();
                 imgStar1.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
                 imgStar2.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
                 imgStar3.setImageDrawable(getResources().getDrawable(R.mipmap.ic_star_empty));
                 break;
         }
+
+        if (g.getDrivers() == 5) {
+            g.resetLastLostLifeTime();//the time should only reset
+        }
+        g.minusDriver();
 
         g.saveStars(base, levelnum, sr);
 
@@ -333,11 +337,12 @@ public class LevelTemplateActivity extends FragmentActivity implements LevelBina
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 // Save all data
                 g.saveData();
                 // Dismiss the dialog
                 dialog.dismiss();
+
+                finish();
             }
         });
 

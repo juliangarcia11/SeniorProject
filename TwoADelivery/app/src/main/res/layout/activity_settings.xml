@@ -70,7 +70,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Give 5 Drivers"
+            android:text="Lose 5 Drivers"
             android:id="@+id/button_dev_op1"
             android:background="@drawable/button_shape"
             android:padding="5dp"
